@@ -1,0 +1,19 @@
+sudo docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Nullable0.!" \ -p 1433:1433 --name sql1 \ -d mcr.microsoft.com/mssql/server:2017-latest
+
+sudo docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=Nullable0.!" \ -p 1433:1433 --name sql1 \ -d mcr.microsoft.com/mssql/server:20170-latest
+
+sudo docker run --name MSSQL_1433 -m 512m -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=Mssql@root' -p 1433:1433 -d mcr.microsoft.com/mssql/server:2017-latest
+
+
+docker run  --name sql_1433_2  -itd mcr.microsoft.com/mssql/server:2017-latest -e 'ACCEPT_EULA=Y' -e 'MSSQL_SA_PASSWORD'='Mssql@root' -p 1433:1433  /bin/bash
+
+---挂载html为本地文件
+docker run --name myNginx -d -p 2048:2048 -v /Users/zyy/Documents/docker/nginx/log/:/var/log/nginx -v /Users/zyy/Documents/docker/nginx/html:/usr/share/nginx/html -v /Users/zyy/Documents/docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro  -v /Users/zyy/Documents/docker/nginx/conf/conf.d:/etc/nginx/conf.d nginx
+
+---挂载html为sccms项目的文件 -v 宿主机:docker目录 所以实际配置中的数据要按docker虚拟目录来写 docker里是无法读取到宿主机的配置的 并且挂载路径 User不能写为小写user
+docker run --name sccNginx -itd -p 2048:2048 -v /Users/zyy/Documents/docker/nginx/log/:/var/log/nginx -v /Volumes/produce/javaProjectSrc/git_pro/SCCMS-frontend:/usr/share/nginx/html -v /Users/zyy/Documents/docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro  -v /Users/zyy/Documents/docker/nginx/conf/conf.d:/etc/nginx/conf.d nginx
+
+
+docker run  --name myNginx -d -p 8080:80 -v /Users/zyy/Documents/docker/nginx/log/:/var/log/ nginx -v /Users/zyy/Documents/docker/nginx/html:/usr/share/nginx/htmll -v /Users/zyy/Documents/docker/nginx/conf/nginx.conf:/etc/nginx/nginx.conf:ro  -v /Users/zyy/Documents/docker/nginx/conf/conf.d:/etc/nginx/conf.d nginx
+
+docker run -d --name redis_test -p 6379:6379 -v /Users/zyy/Documents/docker/redis/redis.conf:/usr/local/etc/redis/redis.conf redis redis-server /usr/local/etc/redis/redis.conf
